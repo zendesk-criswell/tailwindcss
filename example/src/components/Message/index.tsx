@@ -10,8 +10,6 @@ import classNames from 'classnames';
 
 import { MessageGroupContext } from '../MessageGroup';
 
-import styles from './message.module.css';
-
 export const Message: React.FC<{ actions?: React.ReactElement; children: ReactNode }> = ({
   children,
   actions
@@ -20,13 +18,13 @@ export const Message: React.FC<{ actions?: React.ReactElement; children: ReactNo
 
   return (
     <div
-      className={classNames(styles.message, {
-        [styles['message--maker']]: messageType === 'maker',
-        [styles['message--user']]: messageType === 'user'
+      className={classNames('py-[6px] bg-grey-200 text-grey-800 rounded-4 px-4 mb-2', {
+        'self-start': messageType === 'maker',
+        'self-end bg-teal-600 text-white': messageType === 'user'
       })}
     >
       {children}
-      {actions && <div className={styles['action-list']}>{actions}</div>}
+      {actions && <div className="mt-2 -mb-[6px] -mx-4 z-0 p-px">{actions}</div>}
     </div>
   );
 };
@@ -34,4 +32,16 @@ export const Message: React.FC<{ actions?: React.ReactElement; children: ReactNo
 export const Action: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   className,
   ...other
-}) => <button className={classNames(className, styles.action)} type="button" {...other} />;
+}) => (
+  <button
+    className={classNames(
+      className,
+      'border-solid border-0 block w-full bg-white border-grey-200 text-blue-600 leading-lg p-2 transitiona-all duration-75 ease-in-out relative',
+      'hover:text-blue-800 hover:bg-blue-600/10 hover:z-10 hover:outline hover:outline-blue-600',
+      'last:rounded-b-4 border-b last:border-b-0 hover:outline-1 hover:outline',
+      'focus-visible:z-10'
+    )}
+    type="button"
+    {...other}
+  />
+);

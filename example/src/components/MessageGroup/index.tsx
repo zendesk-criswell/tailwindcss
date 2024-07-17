@@ -8,8 +8,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import styles from './messagegroup.module.css';
-
 type MESSAGE_TYPE = 'maker' | 'user';
 
 export const MessageGroupContext = React.createContext<MESSAGE_TYPE>('user');
@@ -22,14 +20,16 @@ export const MessageGroup: React.FC<{
 }> = ({ children, type, title, avatar }) => (
   <MessageGroupContext.Provider value={type}>
     <div
-      className={classNames(styles['message-group'], {
-        [styles['message-group--maker']]: type === 'maker',
-        [styles['message-group--user']]: type === 'user'
+      className={classNames('flex flex-col relative', {
+        'ps-9 pe-4 items-start': type === 'maker',
+        'ps-4 items-end': type === 'user'
       })}
     >
-      {title && <div className={styles.title}>{title}</div>}
+      {title && <div className="text-grey-600 text-sm px-4 font-light">{title}</div>}
       {children}
-      {avatar && <div className={styles.avatar}>{avatar}</div>}
+      {avatar && (
+        <div className="*:rounded-full *:absolute *:start-0 *:bottom-2 *:h-8 *:w-8">{avatar}</div>
+      )}
     </div>
   </MessageGroupContext.Provider>
 );

@@ -6,7 +6,6 @@
  */
 
 import React, { ReactNode, useLayoutEffect, useRef } from 'react';
-import styles from './conversationlog.module.css';
 
 export const ConversationLog: React.FC<{ children: ReactNode }> = ({ children }) => {
   const logRef = useRef<HTMLDivElement>(null);
@@ -19,7 +18,10 @@ export const ConversationLog: React.FC<{ children: ReactNode }> = ({ children })
   }, []);
 
   return (
-    <div className={styles.log} ref={logRef}>
+    <div
+      className="max-h-[385px] flex-grow overflow-y-auto px-5 pt-3 overscroll-contain"
+      ref={logRef}
+    >
       {children}
     </div>
   );
