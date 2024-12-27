@@ -7,7 +7,7 @@
 
 import { DEFAULT_THEME, IGardenTheme, ThemeProvider } from '@zendeskgarden/react-theming';
 import { Field, Toggle } from '@zendeskgarden/react-forms';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
 import IconDark from '@zendeskgarden/svg-icons/src/16/moon-stroke.svg?react';
 import IconLight from '@zendeskgarden/svg-icons/src/16/sun-stroke.svg?react';
 import { Span } from '@zendeskgarden/react-typography';
@@ -23,6 +23,8 @@ import styles from './app.module.css';
 
 const ColorSchemeToggle: React.FC = () => {
   const [checked, setChecked] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.scheme = checked ? 'dark' : 'light';
+
   const theme = {
     ...DEFAULT_THEME,
     colors: {
@@ -30,14 +32,6 @@ const ColorSchemeToggle: React.FC = () => {
       base: checked ? 'dark' : 'light'
     }
   } as IGardenTheme;
-
-  useLayoutEffect(() => {
-    if (checked) {
-      document.documentElement.dataset.scheme = 'dark';
-    } else {
-      document.documentElement.dataset.scheme = 'light';
-    }
-  }, [checked]);
 
   return (
     <ThemeProvider theme={theme}>
