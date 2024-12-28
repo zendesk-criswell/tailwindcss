@@ -5,10 +5,11 @@
  * found at http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-import { theme } from './theme';
+import { DEFAULT_THEME as defaultGardenTheme } from '@zendeskgarden/react-theming';
+import { getTailwindTheme } from './theme';
 
 describe('Theme', () => {
   it('matches expected values', () => {
-    expect(theme).toMatchSnapshot();
+    expect(getTailwindTheme(defaultGardenTheme)).toMatchSnapshot();
   });
 });

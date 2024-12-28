@@ -6,6 +6,7 @@
  */
 
 import postcss, { LazyResult } from 'postcss';
+import { DEFAULT_THEME } from '@zendeskgarden/react-theming';
 import gardenPlugin from './index';
 import tailwindCSS from 'tailwindcss';
 
@@ -27,7 +28,7 @@ describe('Garden TailwindCSS Plugin', () => {
     it('applies preflight styles when disabled', async () => {
       const result = await processCSS(
         /* eslint-disable-next-line @typescript-eslint/no-confusing-void-expression */
-        { plugins: [gardenPlugin({ includeBedrock: false })] },
+        { plugins: [gardenPlugin({ includeBedrock: false, theme: DEFAULT_THEME })] },
         '@tailwind base;'
       );
 

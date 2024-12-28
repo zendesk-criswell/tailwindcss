@@ -1,4 +1,3 @@
-
 .textarea {
   padding-top: 6px;
   height: 68px;
@@ -18,14 +17,15 @@
   @apply dark:border-grey-800;
 }
 
-.textarea:focus, .textarea:hover, .textarea:active {
+.textarea:focus,
+.textarea:hover,
+.textarea:active {
   @apply border-blue-700;
 }
 
 .textarea:focus {
   @apply outline-none;
   @apply shadow-outline;
-  @apply dark:shadow-outline-dark;
 }
 
 .textarea::placeholder {

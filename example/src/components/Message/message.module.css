@@ -81,5 +81,4 @@
   @apply shadow-inner;
   @apply border-blue-700;
   @apply z-10;
-  @apply dark:shadow-inner-dark;
 }

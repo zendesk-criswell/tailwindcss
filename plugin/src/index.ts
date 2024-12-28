@@ -5,37 +5,38 @@
  * found at http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+import { DEFAULT_THEME, IGardenTheme } from '@zendeskgarden/react-theming';
 import fs from 'node:fs';
-import { theme as gardenTheme } from './theme';
+import { getTailwindTheme } from './theme';
 import plugin from 'tailwindcss/plugin';
 import postcss from 'postcss';
+import { semanticTokenCSS } from './semantic';
 
 interface IPluginOptions {
   includeBedrock?: boolean;
+  theme: IGardenTheme;
 }
 
-const DEFAULT_OPTIONS: IPluginOptions = { includeBedrock: true };
+const DEFAULT_OPTIONS: IPluginOptions = {
+  includeBedrock: true,
+  theme: DEFAULT_THEME
+};
 
 export default plugin.withOptions(
   (options: IPluginOptions = DEFAULT_OPTIONS) =>
     ({ addBase }: any): void => {
-      if (!options.includeBedrock) {
-        return;
+      addBase(semanticTokenCSS({ theme: options.theme }));
+
+      if (options.includeBedrock) {
+        addBase(
+          postcss.parse(fs.readFileSync(require.resolve('@zendeskgarden/css-bedrock'), 'utf8'))
+        );
       }
-
-      const gardenBedrockCSS = postcss.parse(
-        fs.readFileSync(require.resolve('@zendeskgarden/css-bedrock'), 'utf8')
-      );
-
-      /**
-       * Include `@zendeskgarden/css-bedrock` as a global CSS reset
-       */
-      addBase(gardenBedrockCSS);
     },
   (options: IPluginOptions = DEFAULT_OPTIONS) =>
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
     ({
-      theme: gardenTheme, // Overwrite global theme with Garden values
+      theme: getTailwindTheme(options.theme),
       corePlugins: {
         preflight: !options.includeBedrock // Disable Tailwind global resets as we provide our own
       }
